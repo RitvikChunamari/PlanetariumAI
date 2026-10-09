@@ -53,8 +53,13 @@ rustup-init.exe
 core/models/
 core/build/
 core/dist/
+core/data/lancedb/
+core/data/conversations/
+core/data/training/
 app/src-tauri/resources/models/
 app/src-tauri/resources/data/
+dist_installers/
+temp_macos_artifact/
 
 # OS artifacts
 Thumbs.db

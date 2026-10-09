@@ -28,7 +28,7 @@ jobs:
             target: x86_64-pc-windows-msvc
             binary_ext: .exe
             bundle_artifact_name: PlanetariumAI-Windows-x64
-            bundle_path: app/src-tauri/target/release/bundle
+            bundle_path: app/src-tauri/target/x86_64-pc-windows-msvc/release/bundle
 
           # 2. macOS Apple Silicon (M1/M2/M3/M4 .dmg)
           - os: macos-latest
@@ -52,7 +52,7 @@ jobs:
             target: x86_64-unknown-linux-gnu
             binary_ext: ''
             bundle_artifact_name: PlanetariumAI-Linux-x64
-            bundle_path: app/src-tauri/target/release/bundle
+            bundle_path: app/src-tauri/target/x86_64-unknown-linux-gnu/release/bundle
 
     runs-on: ${{ matrix.os }}
     name: Build ${{ matrix.bundle_artifact_name }}
@@ -173,6 +173,11 @@ jobs:
             ${{ matrix.bundle_path }}/dmg/*.dmg
             ${{ matrix.bundle_path }}/appimage/*.AppImage
             ${{ matrix.bundle_path }}/deb/*.deb
+            app/src-tauri/target/**/bundle/msi/*.msi
+            app/src-tauri/target/**/bundle/nsis/*.exe
+            app/src-tauri/target/**/bundle/dmg/*.dmg
+            app/src-tauri/target/**/bundle/appimage/*.AppImage
+            app/src-tauri/target/**/bundle/deb/*.deb
           if-no-files-found: warn
           retention-days: 14
 
