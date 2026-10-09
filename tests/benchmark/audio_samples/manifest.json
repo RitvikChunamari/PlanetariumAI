@@ -1,0 +1,23 @@
+[
+  {
+    "id": "sample_1_clean",
+    "file": "sample_1_clean.wav",
+    "path": "F:\\Antigravity\\AstralSage\\tests\\benchmark\\audio_samples\\sample_1_clean.wav",
+    "type": "clean",
+    "reference_text": "What is the largest planet in our solar system?"
+  },
+  {
+    "id": "sample_2_dysarthric",
+    "file": "sample_2_dysarthric.wav",
+    "path": "F:\\Antigravity\\AstralSage\\tests\\benchmark\\audio_samples\\sample_2_dysarthric.wav",
+    "type": "dysarthric",
+    "reference_text": "Tell me about black holes and the event horizon."
+  },
+  {
+    "id": "sample_3_noisy",
+    "file": "sample_3_noisy.wav",
+    "path": "F:\\Antigravity\\AstralSage\\tests\\benchmark\\audio_samples\\sample_3_noisy.wav",
+    "type": "noisy",
+    "reference_text": "How old is the universe according to cosmic measurements?"
+  }
+]

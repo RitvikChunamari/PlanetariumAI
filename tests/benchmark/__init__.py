@@ -1,0 +1,1 @@
+"""PlanetariumAI automated benchmark suite."""

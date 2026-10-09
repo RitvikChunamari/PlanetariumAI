@@ -1,0 +1,36 @@
+[project]
+name = "core"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.11.*"
+dependencies = [
+    "einops>=0.8.2",
+    "fastapi>=0.143.0",
+    "faster-whisper>=1.2.1",
+    "httpx>=0.28.1",
+    "huggingface-hub>=1.33.0",
+    "kokoro-onnx",
+    "lancedb>=0.40.0",
+    "llama-cpp-python>=0.3.36",
+    "numpy",
+    "pytest>=9.1.1",
+    "requests>=2.34.2",
+    "sentence-transformers>=6.1.0",
+    "torch>=2.14.1",
+    "torchaudio>=2.11.0",
+    "uvicorn>=0.54.0",
+    "websockets>=17.2",
+]
+
+[project.scripts]
+core = "core:main"
+
+[build-system]
+requires = ["uv_build>=0.12.22,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
