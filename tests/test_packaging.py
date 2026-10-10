@@ -48,7 +48,7 @@ def test_tauri_config_universal_targets():
     assert any("resources" in r for r in resources), "Resources missing from bundle resources"
 
 def test_github_actions_workflow_matrix():
-    """Verify CI/CD workflow contains all 3 OS platforms (4 architecture targets)."""
+    """Verify CI/CD workflow contains Windows x64 and macOS Apple Silicon targets."""
     workflow_path = ".github/workflows/build-installers.yml"
     assert os.path.exists(workflow_path), "CI/CD workflow file not found"
     
@@ -62,19 +62,16 @@ def test_github_actions_workflow_matrix():
     platforms = [m.get("platform") for m in matrix]
     targets = [m.get("target") for m in matrix]
     
-    assert "windows" in platforms
-    assert "macos" in platforms
-    assert "linux" in platforms
+    assert "windows" in platforms, "Missing Windows target platform in workflow"
+    assert "macos" in platforms, "Missing macOS target platform in workflow"
     
-    assert "x86_64-pc-windows-msvc" in targets
-    assert "aarch64-apple-darwin" in targets
-    assert "x86_64-apple-darwin" in targets
-    assert "x86_64-unknown-linux-gnu" in targets
+    assert "x86_64-pc-windows-msvc" in targets, "Missing Windows x64 target triple"
+    assert "aarch64-apple-darwin" in targets, "Missing macOS Apple Silicon target triple"
 
 def test_windows_standalone_installers_exist():
     """Verify that both Windows installers were generated and are complete."""
-    msi_path = "app/src-tauri/target/release/bundle/msi/PlanetariumAI_1.0.0_x64_en-US.msi"
-    nsis_path = "app/src-tauri/target/release/bundle/nsis/PlanetariumAI_1.0.0_x64-setup.exe"
+    msi_path = "dist_installers/windows/PlanetariumAI_1.0.0_x64_en-US.msi"
+    nsis_path = "dist_installers/windows/PlanetariumAI_1.0.0_x64-setup.exe"
     sidecar_path = "app/src-tauri/binaries/planetarium-ai-server-x86_64-pc-windows-msvc.exe"
     
     assert os.path.exists(sidecar_path), "Frozen sidecar executable does not exist"
@@ -85,3 +82,9 @@ def test_windows_standalone_installers_exist():
     
     assert os.path.exists(nsis_path), "NSIS setup installer does not exist"
     assert os.path.getsize(nsis_path) > 1024 * 1024 * 1024, "NSIS installer is too small (<1GB)"
+
+def test_macos_standalone_installer_exists():
+    """Verify that the macOS Apple Silicon .dmg installer was generated and downloaded."""
+    dmg_path = "dist_installers/macos/PlanetariumAI_1.0.0_aarch64.dmg"
+    assert os.path.exists(dmg_path), "macOS Apple Silicon DMG installer does not exist"
+    assert os.path.getsize(dmg_path) > 500 * 1024 * 1024, "macOS Apple Silicon DMG installer is too small (<500MB)"

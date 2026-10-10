@@ -38,22 +38,6 @@ jobs:
             bundle_artifact_name: PlanetariumAI-macOS-AppleSilicon
             bundle_path: app/src-tauri/target/aarch64-apple-darwin/release/bundle
 
-          # 3. macOS Intel (x86_64 .dmg)
-          - os: macos-13
-            platform: macos
-            target: x86_64-apple-darwin
-            binary_ext: ''
-            bundle_artifact_name: PlanetariumAI-macOS-Intel
-            bundle_path: app/src-tauri/target/x86_64-apple-darwin/release/bundle
-
-          # 4. Linux x64 (.AppImage & .deb)
-          - os: ubuntu-latest
-            platform: linux
-            target: x86_64-unknown-linux-gnu
-            binary_ext: ''
-            bundle_artifact_name: PlanetariumAI-Linux-x64
-            bundle_path: app/src-tauri/target/x86_64-unknown-linux-gnu/release/bundle
-
     runs-on: ${{ matrix.os }}
     name: Build ${{ matrix.bundle_artifact_name }}
 
@@ -68,21 +52,6 @@ jobs:
         with:
           python-version: '3.11'
           cache: 'pip'
-
-      - name: Install System Dependencies (Linux)
-        if: matrix.platform == 'linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
-            build-essential \
-            curl \
-            wget \
-            file \
-            libxdo-dev \
-            libssl-dev \
-            libayatana-appindicator3-dev \
-            librsvg2-dev
 
       - name: Install Rust Toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -171,13 +140,9 @@ jobs:
             ${{ matrix.bundle_path }}/msi/*.msi
             ${{ matrix.bundle_path }}/nsis/*.exe
             ${{ matrix.bundle_path }}/dmg/*.dmg
-            ${{ matrix.bundle_path }}/appimage/*.AppImage
-            ${{ matrix.bundle_path }}/deb/*.deb
             app/src-tauri/target/**/bundle/msi/*.msi
             app/src-tauri/target/**/bundle/nsis/*.exe
             app/src-tauri/target/**/bundle/dmg/*.dmg
-            app/src-tauri/target/**/bundle/appimage/*.AppImage
-            app/src-tauri/target/**/bundle/deb/*.deb
           if-no-files-found: warn
           retention-days: 14
 
@@ -205,5 +170,3 @@ jobs:
             release-artifacts/**/*.msi
             release-artifacts/**/*.exe
             release-artifacts/**/*.dmg
-            release-artifacts/**/*.AppImage
-            release-artifacts/**/*.deb
